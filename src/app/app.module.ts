@@ -12,6 +12,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./auth.service";
 import {ActiveTodoComponent} from "./main/active-todo/active-todo.component";
 import {DoneTodoComponent} from "./main/done-todo/done-todo.component";
+import {TodoItemComponent} from "./main/active-todo/todo-item/todo-item.component";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {DoneTodoComponent} from "./main/done-todo/done-todo.component";
     LoginComponent,
     MainComponent,
     ActiveTodoComponent,
-    DoneTodoComponent
+    DoneTodoComponent,
+    TodoItemComponent
   ],
   imports: [
     BrowserModule,

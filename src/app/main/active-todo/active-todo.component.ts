@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./active-todo.component.scss']
 })
 export class ActiveTodoComponent implements OnInit {
+  unsavedChanges: boolean;
 
-  constructor() { }
+  constructor() {
+    this.unsavedChanges = true;
+  }
 
   ngOnInit(): void {
   }

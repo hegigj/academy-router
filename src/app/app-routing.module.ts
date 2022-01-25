@@ -5,6 +5,7 @@ import {MainComponent} from "./main/main.component";
 import {AuthGuard} from "./auth.guard";
 import {ActiveTodoComponent} from "./main/active-todo/active-todo.component";
 import {DoneTodoComponent} from "./main/done-todo/done-todo.component";
+import {TodoItemComponent} from "./main/active-todo/todo-item/todo-item.component";
 
 const MAIN_ROUTES: Routes = [
   {
@@ -20,14 +21,29 @@ const MAIN_ROUTES: Routes = [
     path: 'main',
     component: MainComponent,
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    data: {
+      key: 'value'
+    },
     children: [
       {
         path: 'active',
         component: ActiveTodoComponent,
+        canActivateChild: [AuthGuard],
+        // canDeactivate: [AuthGuard],
         data: {
+          title: 'Active Todos',
           userRole: 'SIMPLE_USER'
         },
+        children: [
+          {
+            path: ':TODO_ITEM_ID',
+            component: TodoItemComponent,
+            data: {
+              title: 'Active Todos',
+              userRole: 'SIMPLE_USER'
+            }
+          }
+        ]
       },
       {
         path: 'done',
