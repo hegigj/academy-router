@@ -6,6 +6,9 @@ import {AuthGuard} from "./auth.guard";
 import {ActiveTodoComponent} from "./main/active-todo/active-todo.component";
 import {DoneTodoComponent} from "./main/done-todo/done-todo.component";
 import {TodoItemComponent} from "./main/active-todo/todo-item/todo-item.component";
+import {UserRole} from "./auth.service";
+import {Status} from "./todo.service";
+import {TodoResolver} from "./todo.resolver";
 
 const MAIN_ROUTES: Routes = [
   {
@@ -18,12 +21,18 @@ const MAIN_ROUTES: Routes = [
     component: LoginComponent
   },
   {
+    path: 'admin-panel',
+    canLoad: [AuthGuard],
+    data: {
+      userRole: UserRole.ADMIN
+    },
+    loadChildren: () => import('./admin-panel/admin-panel.module')
+      .then(m => m.AdminPanelModule)
+  },
+  {
     path: 'main',
     component: MainComponent,
     canActivate: [AuthGuard],
-    data: {
-      key: 'value'
-    },
     children: [
       {
         path: 'active',
@@ -32,15 +41,21 @@ const MAIN_ROUTES: Routes = [
         // canDeactivate: [AuthGuard],
         data: {
           title: 'Active Todos',
-          userRole: 'SIMPLE_USER'
+          userRole: UserRole.SIMPLE
         },
         children: [
           {
             path: ':TODO_ITEM_ID',
             component: TodoItemComponent,
             data: {
-              title: 'Active Todos',
-              userRole: 'SIMPLE_USER'
+              statusOptions: [
+                Status.ACTIVE,
+                Status.DONE
+              ],
+              userRole: UserRole.SIMPLE
+            },
+            resolve: {
+              todoItem: TodoResolver
             }
           }
         ]
@@ -70,3 +85,20 @@ const MAIN_ROUTES: Routes = [
   ]
 })
 export class AppRoutingModule {}
+// /login
+// /feed
+// /feed?pageNo=1
+// /feed/0
+// /feed/0/user
+// FeedModel
+// {
+//   title: '',
+//   desc: '',
+//   thumbnail: '',
+//   createdDate: Date,
+//   user: {
+//     name: '',
+//     surname: '',
+//     totalPosts: 4
+// }
+

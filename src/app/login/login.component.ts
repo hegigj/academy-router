@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthService} from "../auth.service";
+import {AuthService, UserRole} from "../auth.service";
 
 @Component({
   selector: 'app-login',
@@ -24,8 +24,15 @@ export class LoginComponent {
   login(): void {
     if (this.loginForm.valid) {
       if (this.authService.authUser(this.loginForm.value)) {
+        switch (this.authService.userRole) {
+          case UserRole.ADMIN:
+            this.router.navigateByUrl('admin-panel');
+            break;
+          case UserRole.SIMPLE:
+            this.router.navigateByUrl('main');
+            break;
+        }
         // this.router.navigate(['main']);
-        this.router.navigateByUrl('main');
       }
     }
   }

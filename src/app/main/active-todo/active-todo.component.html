@@ -1,10 +1,11 @@
 <p>active-todo works!</p>
-<button mat-stroked-button color="accent" routerLink="1">TODO 1</button>
-<br>
-<button mat-stroked-button color="accent" routerLink="2">TODO 2</button>
-<br>
-<button mat-stroked-button color="accent" [routerLink]="[3]">TODO 3</button>
-<br>
-<button mat-stroked-button color="accent" routerLink="rigelt">TODO 4</button>
-<br>
+<ul>
+  <ng-container *ngIf="todoList">
+    <ng-container *ngFor="let todo of todoList">
+      <li style="cursor: pointer" [routerLink]="[todo.id]" routerLinkActive="li-active">
+        {{todo.name}} - {{todo.dueDate | date: 'dd/MM/yyyy HH:mm'}}
+      </li>
+    </ng-container>
+  </ng-container>
+</ul>
 <router-outlet></router-outlet>

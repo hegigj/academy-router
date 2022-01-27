@@ -1,35 +1,37 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {Status} from "../../../todo.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
   styleUrls: ['./todo-item.component.scss']
 })
-export class TodoItemComponent implements OnInit, OnDestroy {
+export class TodoItemComponent implements OnInit {
+  statusOptions: Status[];
+  todoForm: FormGroup;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.statusOptions = activatedRoute.snapshot.data.statusOptions;
+    this.todoForm = new FormGroup({
+      name: new FormControl(),
+      dueDate: new FormControl(),
+      status: new FormControl()
+    });
+  }
 
   ngOnInit(): void {
-    console.log('TodoItemComponent init');
-    console.log('[Snapshot]: I\'m todo', this.activatedRoute.snapshot.params.TODO_ITEM_ID);
-    this.activatedRoute.params.subscribe((param) => console.log('[Watching]: I\'m todo', param.TODO_ITEM_ID));
-    this.activatedRoute.queryParams.subscribe((param) => console.log('[Watching]: I\'m todo (query)', param));
-  }
-
-  ngOnDestroy(): void {
-    console.log('TodoItemComponent destroyed');
-  }
-
-  goToPage(pageNo: number): void {
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: {
-        pageNo
-      }
-    });
+    this.activatedRoute.data
+      .subscribe(({ todoItem }) => {
+        const { name, dueDate, status} = todoItem;
+        this.todoForm.patchValue({
+          name,
+          dueDate,
+          status
+        });
+      });
   }
 }

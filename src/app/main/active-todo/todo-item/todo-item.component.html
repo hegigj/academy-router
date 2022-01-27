@@ -1,6 +1,17 @@
-<p>todo-item works!</p>
-<button mat-stroked-button color="warn" (click)="goToPage(1)">1</button>
-<button mat-stroked-button color="warn" (click)="goToPage(2)">2</button>
-<button mat-stroked-button color="warn" (click)="goToPage(3)">3</button>
-<button mat-stroked-button color="warn" (click)="goToPage(4)">4</button>
-<button mat-stroked-button color="warn" (click)="goToPage(5)">5</button>
+<div [formGroup]="todoForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" formControlName="name">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Due Date</mat-label>
+    <input matInput type="date" formControlName="dueDate">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option *ngFor="let opt of statusOptions" [value]="opt">{{opt}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-flat-button color="primary">Save</button>
+</div>

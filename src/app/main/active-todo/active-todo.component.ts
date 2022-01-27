@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TodoModel, TodoService} from "../../todo.service";
 
 @Component({
   selector: 'app-active-todo',
@@ -7,12 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActiveTodoComponent implements OnInit {
   unsavedChanges: boolean;
+  todoList?: TodoModel[];
 
-  constructor() {
+  constructor(
+    private todoService: TodoService
+  ) {
     this.unsavedChanges = true;
   }
 
   ngOnInit(): void {
+    this.todoService
+      .getList()
+      .subscribe(list => this.todoList = list);
   }
 
 }

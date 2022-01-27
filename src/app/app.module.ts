@@ -13,6 +13,7 @@ import {AuthService} from "./auth.service";
 import {ActiveTodoComponent} from "./main/active-todo/active-todo.component";
 import {DoneTodoComponent} from "./main/done-todo/done-todo.component";
 import {TodoItemComponent} from "./main/active-todo/todo-item/todo-item.component";
+import {MatOptionModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {TodoItemComponent} from "./main/active-todo/todo-item/todo-item.componen
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    MatOptionModule
   ],
   providers: [
     AuthService
